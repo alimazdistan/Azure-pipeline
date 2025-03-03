@@ -13,7 +13,7 @@ steps:
       javaHomeOption: 'JDKVersion'
       mavenVersionOption: 'Default'
       mavenAuthenticateFeed: false
-      effectivePomSkip: true # Set to true to skip effective pom resolution
+      effectivePomSkip: true 
       sonarQubeRunAnalysis: false
 
   - task: CopyFiles@2
@@ -25,7 +25,7 @@ steps:
   - task: Docker@2
     inputs:
       command: 'login'
-      containerRegistry: 'mycicd' # Ensure the service connection name is correct
+      containerRegistry: 'mycicd' 
 
   - task: Docker@2
     inputs:
