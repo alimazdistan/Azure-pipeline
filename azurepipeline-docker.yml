@@ -1,0 +1,30 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: Maven@4
+    inputs:
+      mavenPomFile: 'pom.xml'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      javaHomeOption: 'JDKVersion'
+      mavenVersionOption: 'Default'
+      mavenAuthenticateFeed: false
+      effectivePomSkip: true
+      sonarQubeRunAnalysis: false
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '$(Build.SourcesDirectory)/webapp/target'
+      Contents: '*.war'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: Docker@2
+    inputs:
+      command: 'login'
+      containerRegistry: 'mycicd' 
+
+  
