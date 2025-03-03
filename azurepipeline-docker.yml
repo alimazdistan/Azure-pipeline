@@ -13,7 +13,7 @@ steps:
       javaHomeOption: 'JDKVersion'
       mavenVersionOption: 'Default'
       mavenAuthenticateFeed: false
-      effectivePomSkip: true
+      effectivePomSkip: true # Set to true to skip effective pom resolution
       sonarQubeRunAnalysis: false
 
   - task: CopyFiles@2
@@ -25,6 +25,11 @@ steps:
   - task: Docker@2
     inputs:
       command: 'login'
-      containerRegistry: 'mycicd' 
+      containerRegistry: 'mycicd' # Ensure the service connection name is correct
 
-  
+  - task: Docker@2
+    inputs:
+      command: 'buildAndPush'
+      repository: 'myjava'
+      dockerfile: '$(Build.SourcesDirectory)/AzureDockerfile'
+      tags: 'latest'
